@@ -1,7 +1,7 @@
 import os
 import glob
 from parse_corpus import parse_dialogue
-from comparing_strings import getClosestSentiment
+from comparing_strings import getClosestSentiment, getClosestCharacterSentiment
 
 if __name__ == '__main__':
 
@@ -14,5 +14,6 @@ if __name__ == '__main__':
 		tester = "I'm creating some simple chatbots using natural langugage processing and sentiment."
 	print('You sent: ' + tester)
 
-	selected_character = 'TUTTLE'
+	selected_character = getClosestCharacterSentiment(character_lines, submitted_str)
+
 	print(selected_character + ' replies: ' + getClosestSentiment(character_lines[selected_character], tester))
