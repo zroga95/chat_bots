@@ -62,3 +62,43 @@ def parse_dialogue(path):
 
     return dialogue_dict
 
+def parse_ordered_dialogue(path):
+    
+    repeat_characters = parse_script_characters(path)
+    
+    dialogue_list = []
+    counter = 0
+    
+    fixed_names = []
+    for i in repeat_characters:
+        if '\n' not in i:
+            fixed_names.append((i + '\n').upper())
+        else:
+            fixed_names.append(i.upper())
+
+    with open(path, 'r') as f:
+        lines =  f.readlines()
+        for i in range(0, len(lines)):
+            for j in fixed_names:
+                if j.upper() in lines[i].upper():
+                    temp = ''
+                    for x in range(1,20):
+                        if lines[x + i].strip() != '':
+                            temp += lines[x+i].strip() + ' '
+                        else:
+                            break
+                    #print(str(temp))
+                    joined_str = str(temp)
+                    if (len(joined_str) > 10) & (len(joined_str) < 500):
+                        #remove anything in parenthesis
+                        dialogue_list.append(re.sub("\(.*?\)","",joined_str))
+                    #print("\n', '\n'" in temp)
+                    #print([lines[x + i] for x in range(1,20)])
+                    counter = counter + 1
+                #breaking when non-specific issues
+            if counter > 10000:
+                break
+
+    return dialogue_list
+        
+        
